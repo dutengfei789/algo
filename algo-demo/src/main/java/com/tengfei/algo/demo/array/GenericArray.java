@@ -1,7 +1,7 @@
 package com.tengfei.algo.demo.array;
 
 @SuppressWarnings("unchecked")
-public class GenericArray<E extends Comparable<E>> {
+public class GenericArray<E> {
 
     private Object[] array;
 
@@ -59,6 +59,10 @@ public class GenericArray<E extends Comparable<E>> {
 
     public E get(int index) {
         return (E) array[index];
+    }
+
+    public int getCapacity() {
+        return array.length;
     }
 
     public E set(int index, E e) {
