@@ -1,12 +1,12 @@
 package com.tengfei.algo.demo.queue;
 
 /**
- * 循环队列
+ * 循环队列。没有多余元素的方式
  * 注意：循环队列的两种遍历方式
  *
  * @param <E>
  */
-public class LoopQueue<E> implements Queue<E> {
+public class LoopQueue2<E> implements Queue<E> {
 
     private E[] array;
 
@@ -14,15 +14,12 @@ public class LoopQueue<E> implements Queue<E> {
 
     private int size;
 
-    public LoopQueue() {
-        array = (E[]) new Object[10 + 1];
-        front = 0;
-        size = 0;
-        tail = 0;
+    public LoopQueue2() {
+        this(10);
     }
 
-    public LoopQueue(int capacity) {
-        array = (E[]) new Object[capacity + 1];
+    public LoopQueue2(int capacity) {
+        array = (E[]) new Object[capacity];
         front = 0;
         size = 0;
         tail = 0;
@@ -30,8 +27,8 @@ public class LoopQueue<E> implements Queue<E> {
 
     @Override
     public void enqueue(E e) {
-        //头接点和尾接点有一个元素差，当tail+1=front时说明队列已满，需要扩容
-        if ((tail + 1)%array.length == front) {
+        //头接点和尾接点有一个元素差，当tail=front时说明队列已满，需要扩容
+        if (tail == front && size != 0) {
             resize(array.length * 2);
         }
         array[tail] = e;
@@ -40,9 +37,11 @@ public class LoopQueue<E> implements Queue<E> {
     }
 
     private void resize(int newCapacity) {
-        E[] newArray = (E[]) new Object[newCapacity + 1];
+        E[] newArray = (E[]) new Object[newCapacity];
         //循环队列遍历1
-        for (int i = 0; (i + front) % array.length != tail; i++) {
+        boolean firstLoop = true;
+        for (int i = 0;( (i + front) % array.length != tail && size != 0)||firstLoop; i++) {
+            firstLoop = false;
             newArray[i] = array[(front + i) % array.length];
         }
         array = newArray;
@@ -86,11 +85,12 @@ public class LoopQueue<E> implements Queue<E> {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("LoopQueue size:%d,length:%d,Front:[", size, array.length - 1));
+        sb.append(String.format("LoopQueue2 size:%d,length:%d,Front:[", size, array.length));
         //遍历方式2
-        for (int i = front; i != tail; i = (i + 1) % array.length) {
+        boolean firstLoop = true;
+        for (int i = front; (i!= tail&& size!=0)|| firstLoop; i = (i + 1) % array.length) {
+            firstLoop = false;
             sb.append(array[i]);
-
             if ((i + 1) % array.length != tail) {
                 sb.append(",");
             }
