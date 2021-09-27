@@ -4,7 +4,7 @@ public class StackTest {
 
     public static void main(String[] args) {
 
-        ArrayStack<Integer> stack = new ArrayStack<>();
+        Stack<Integer> stack = new LinkListStack<>();
 
         for (int i = 0; i < 5; i++) {
             stack.push(i);
