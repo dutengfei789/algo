@@ -1,0 +1,42 @@
+
+    /**
+     * Definition for singly-linked list.
+     * public class ListNode {
+     * int val;
+     * ListNode next;
+     * ListNode() {}
+     * ListNode(int val) { this.val = val; }
+     * ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+     * }
+     */
+    class Solution {
+        public ListNode removeElements(ListNode head, int val) {
+
+            while (head != null && head.val == val) {
+                head = head.next;
+                head.next = null;
+            }
+            if (head == null) {
+                return null;
+            }
+
+            ListNode cur = head.next;
+            while (cur != null) {
+                ListNode delNode = cur.next;
+                if (delNode.val == val) {
+                    cur.next=delNode.next;
+                    delNode.next=null;
+                }
+                cur = cur.next;
+            }
+            return head;
+        }
+    }
+
+
+
+//runtime_error:java.lang.NullPointerException
+  at line 17, Solution.removeElements
+  at line 54, __DriverSolution__.__helper__
+  at line 87, __Driver__.main
+//last_testcase:[7,7,7,7] 7

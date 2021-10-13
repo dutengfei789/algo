@@ -1,0 +1,30 @@
+class Solution {
+        public ListNode removeElements(ListNode head, int val) {
+
+            while (head != null && head.val == val) {
+                ListNode delNode = head.next;
+                head = delNode.next;
+                delNode.next = null;
+            }
+            if (head == null) {
+                return null;
+            }
+
+            ListNode pre = head;
+            while (pre.next != null) {
+                ListNode delNode = pre.next;
+                if (delNode.val == val) {
+                    pre.next = delNode.next;
+                    delNode.next = null;
+                }else {
+                    pre = pre.next;
+                }
+            }
+            return head;
+        }
+    }
+//runtime_error:java.lang.NullPointerException
+  at line 6, Solution.removeElements
+  at line 54, __DriverSolution__.__helper__
+  at line 87, __Driver__.main
+//last_testcase:[1] 1
