@@ -1,0 +1,34 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode reverseList(ListNode head) {
+
+        ListNode pre = null;
+        ListNode cur = head;
+        ListNode next = head.next;
+
+        while (cur!= null) {
+            cur.next=pre;
+            pre=cur;
+            cur=next;
+            next = next == null ? null : next.next;
+        }
+
+        return pre;
+
+    }
+}
+
+//runtime_error:java.lang.NullPointerException
+  at line 16, Solution.reverseList
+  at line 54, __DriverSolution__.__helper__
+  at line 84, __Driver__.main
+//last_testcase:[]

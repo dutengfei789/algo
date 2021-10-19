@@ -1,5 +1,7 @@
 package com.tengfei.algo.demo;
 
+import com.tengfei.algo.demo.sort.MergeSort;
+
 public class SortingHelper {
 
     public static  <E extends Comparable<E>> boolean isSorted(E[] array) {
@@ -24,6 +26,8 @@ public class SortingHelper {
             InsertionSort.sort2(array);
         }else if (sortName.equals("InsertionSort3")) {
             InsertionSort.sort3(array);
+        }else if (sortName.equals("mergeSort")) {
+            MergeSort.sort(array);
         }
         if (!SortingHelper.isSorted(array)) {
             throw new RuntimeException(sortName + " failed");
