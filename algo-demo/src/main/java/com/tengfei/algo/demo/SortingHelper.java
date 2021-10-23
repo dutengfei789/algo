@@ -30,6 +30,8 @@ public class SortingHelper {
             MergeSort.sort(array);
         }else if (sortName.equals("mergeSort2")) {
             MergeSort.sort2(array);
+        }else if (sortName.equals("mergeSortBU")) {
+            MergeSort.sortBU(array);
         }
         if (!SortingHelper.isSorted(array)) {
             throw new RuntimeException(sortName + " failed");
