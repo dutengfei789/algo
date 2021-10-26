@@ -52,6 +52,19 @@ public class InsertionSort {
         }
     }
 
+    public static <E extends Comparable<E>> void sort(E[] arr,int l,int r) {
+        for (int i = l; i <=r; i++) {
+            E t = arr[i];
+            int j;
+            //发现有更小的元素时，元素前移。将arr[i]插入到合适的位置
+            for (j = i; j - 1 >= l && arr[j - 1].compareTo(t) > 0; j--) {
+                arr[j] = arr[j - 1];
+            }
+            //拿比较的元素放在最小下标位置
+            arr[j] = t;
+        }
+    }
+
     /**
      * 从后向前排序
      * @param arr

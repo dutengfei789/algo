@@ -1,6 +1,7 @@
 package com.tengfei.algo.demo;
 
 import com.tengfei.algo.demo.sort.MergeSort;
+import com.tengfei.algo.demo.sort.QuickSort;
 
 public class SortingHelper {
 
@@ -32,13 +33,15 @@ public class SortingHelper {
             MergeSort.sort2(array);
         }else if (sortName.equals("mergeSortBU")) {
             MergeSort.sortBU(array);
+        }else if (sortName.equals("quickSort")) {
+            QuickSort.sort(array);
         }
         if (!SortingHelper.isSorted(array)) {
             throw new RuntimeException(sortName + " failed");
         }
         long end = System.nanoTime();
         double time = (end - start )/ 1000_000_000.0D;
-        System.out.println(String.format("sortName:%s,n=%d,time=%f", sortName, array.length, time));
+        System.out.printf("sortName:%s,n=%d,time=%f%n", sortName, array.length, time);
     }
 
 
