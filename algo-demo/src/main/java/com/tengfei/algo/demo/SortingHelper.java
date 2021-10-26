@@ -35,6 +35,8 @@ public class SortingHelper {
             MergeSort.sortBU(array);
         }else if (sortName.equals("quickSort")) {
             QuickSort.sort(array);
+        }else if (sortName.equals("quickSort2Ways")) {
+            QuickSort.sort2Ways(array);
         }
         if (!SortingHelper.isSorted(array)) {
             throw new RuntimeException(sortName + " failed");
