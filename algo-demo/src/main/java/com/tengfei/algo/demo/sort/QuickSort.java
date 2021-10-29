@@ -73,7 +73,7 @@ public class QuickSort {
      * @param <E>
      */
     public static  <E extends Comparable<E>> void sort2Ways(E[] arr) {
-        sort(arr, 0, arr.length - 1);
+        sort2Ways(arr, 0, arr.length - 1);
     }
 
     public static  <E extends Comparable<E>> void sort2Ways(E[] arr,int l,int r) {
@@ -118,7 +118,7 @@ public class QuickSort {
             while (i <= j && arr[i].compareTo(arr[l]) < 0) {
                 i++;
             }
-            while (j >= i && arr[j].compareTo(arr[r]) > 0) {
+            while (j >= i && arr[j].compareTo(arr[l]) > 0) {
                 j--;
             }
             if (i >= j) {
@@ -132,6 +132,55 @@ public class QuickSort {
         return j;
     }
 
+    /**
+     * 三路快排
+     * @param arr
+     * @param <E>
+     */
+    public static  <E extends Comparable<E>> void sort3Ways(E[] arr) {
+        sort3Ways(arr, 0, arr.length - 1);
+    }
+
+    public static  <E extends Comparable<E>> void sort3Ways(E[] arr,int l,int r) {
+
+        if (r - l <= 15) {
+            // 使用 Insertion Sort 优化
+            InsertionSort.sort(arr, l, r);
+            // 注意，这里要 return！
+            return;
+        }
+
+        if (l >= r) {
+            return;
+        }
+        //p为最终排好顺序的元素下标
+        //        为了避免对完全有序数组排序时，递归过深，采用随机一个下标做为起始数据，可以避免递归过深
+        int p = l + random.nextInt(r - l + 1);
+        swap(arr, l, p);
+//        swap(arr, l, (r + l) / 2);
+        //j表示小于v的数组最末尾一个元素下标
+        int lt = l, i = l + 1, gt = r+1;
+
+        //arr[l+1...i-1]<=arr[l],arr[j+1...r]>=arr[l]
+        while (i<gt){
+            if (arr[i].compareTo(arr[l])==0) {
+                i++;
+            } else if (arr[i].compareTo(arr[l]) < 0) {
+                lt++;
+                swap(arr, lt, i);
+                i++;
+            }else{
+                //因为gt--的位置元素还没有排序，所以不需要i++
+                gt--;
+                swap(arr, gt, i);
+            }
+        }
+        swap(arr, l, lt);
+        sort3Ways(arr, l, lt-1);
+        sort3Ways(arr, gt, r);
+    }
+
+
     private static <E extends Comparable<E>> void swap(E[] arr, int j, int i) {
         E temp = arr[j];
         arr[j] = arr[i];
@@ -139,30 +188,31 @@ public class QuickSort {
     }
 
     public static void main(String[] args) {
-        int n = 10_000;
+        int n = 10000;
 
         Integer[] array = ArrayGenerate.generateRandomArray(n, n);
         Integer[] array2 = Arrays.copyOf(array, array.length);
-//        Integer[] array = new Integer[]{1, 4, 4, 0, 3};
-        SortingHelper.sortTest("mergeSort2", array);
-        SortingHelper.sortTest("quickSort", array2);
+        Integer[] array3 = Arrays.copyOf(array, array.length);
+        SortingHelper.sortTest("quickSort", array);
+        SortingHelper.sortTest("quickSort2Ways", array2);
+        SortingHelper.sortTest("quickSort3Ways", array3);
         System.out.println();
 
         System.out.println("order array");
         array = ArrayGenerate.generateOrderArray(n);
         array2 = Arrays.copyOf(array, array.length);
-//        Integer[] array = new Integer[]{1, 4, 4, 0, 3};
-        SortingHelper.sortTest("mergeSort2", array);
-        SortingHelper.sortTest("quickSort", array2);
+        array3 = Arrays.copyOf(array, array.length);
+        SortingHelper.sortTest("quickSort", array);
+        SortingHelper.sortTest("quickSort2Ways", array2);
+        SortingHelper.sortTest("quickSort3Ways", array3);
         System.out.println();
 
         System.out.println("zero array");
         array = ArrayGenerate.generateRandomArray(n,1);
         array2 = Arrays.copyOf(array, array.length);
-//        Integer[] array = new Integer[]{1, 4, 4, 0, 3};
-        SortingHelper.sortTest("mergeSort2", array);
-        SortingHelper.sortTest("quickSort", array2);
+        SortingHelper.sortTest("quickSort", array);
         SortingHelper.sortTest("quickSort2Ways", array2);
+        SortingHelper.sortTest("quickSort3Ways", array3);
     }
 
 }

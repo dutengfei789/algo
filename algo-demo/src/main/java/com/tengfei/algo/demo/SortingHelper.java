@@ -37,6 +37,8 @@ public class SortingHelper {
             QuickSort.sort(array);
         }else if (sortName.equals("quickSort2Ways")) {
             QuickSort.sort2Ways(array);
+        }else if (sortName.equals("quickSort3Ways")) {
+            QuickSort.sort3Ways(array);
         }
         if (!SortingHelper.isSorted(array)) {
             throw new RuntimeException(sortName + " failed");
