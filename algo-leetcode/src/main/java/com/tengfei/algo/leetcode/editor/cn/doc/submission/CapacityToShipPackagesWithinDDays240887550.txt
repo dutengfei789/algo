@@ -1,0 +1,51 @@
+    class Solution {
+        /**
+         * weight和days成单调性，weight越大，days越小
+         * 需要找到days(weight)<=days的最小载重量
+         * @param weights
+         * @param days
+         * @return
+         */
+        public int shipWithinDays(int[] weights, int days) {
+
+            //先算出传送带的边界
+            int l=1,r= Arrays.stream(weights).sum();
+            while (l < r) {
+                int mid = l + (r - l) / 2;
+                if (days(weights, mid) <= days) {
+                    r=mid;
+                }else {
+                    l=mid+1;
+                }
+            }
+
+            return l;
+
+        }
+
+        private int days(int[] weights, int weight) {
+            int res = 0;
+            int sum=0;
+            for (int i = 0; i < weights.length; i++) {
+                sum += weights[i];
+                if ((sum / weight == 1 && sum % weight > 0) || sum / weight > 1) {
+                    res++;
+                    sum = weights[i];
+
+                }
+
+                if (i == weights.length - 1 && sum % weight > 0) {
+                    res++;
+                }
+
+            }
+            return res;
+        }
+    }
+
+//total_testcases:85
+//total_correct:57
+//input_formatted:[1,2,3,1,1]
+4
+//expected_output:3
+//code_output:1
